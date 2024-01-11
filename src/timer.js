@@ -1,6 +1,8 @@
-function timer() {
+function Timer() {
     return (
-        <div>timer</div>
+        <div>Timer</div>
 
     );
 }
+
+export default Timer;
