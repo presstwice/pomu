@@ -18,7 +18,6 @@ function CircularProgressWithLabel(props) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          size: '3em',
         }}
       >
         <Typography variant="caption" component="div" color="text.secondary">
