@@ -15,7 +15,7 @@ function Settings() {
                 thumbClassname={'thumb'}
                 trackClassName={'track'}
                 min={1}
-                max={120}
+                max={30}
                 onChange={newValue => settingsInfo.setWorkMinutes(newValue)} 
             />
             <label> break: {settingsInfo.breakMinutes}:00</label>
@@ -25,7 +25,7 @@ function Settings() {
                 trackClassName={'track'}
                 value={settingsInfo.breakMinutes}
                 min={1}
-                max={120}
+                max={15}
                 onChange={newValue => settingsInfo.setBreakMinutes(newValue)} 
             />
             <div style={{textAlign:'center', marginTop:'20px'}}>
