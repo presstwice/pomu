@@ -3,18 +3,13 @@ import 'react-circular-progressbar/dist/styles.css';
 import PlayButton from "./PlayButton";
 import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
-import {useContext, useState, useEffect, useRef} from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import SettingsContext from "./SettingsContext";
-import { Howl } from 'howler';
+import { Howl } from 'howler'; // Import Howl from the howler library
 import finishingSound from './sound/rockrock.mp3';
 
 const red = '#f54e4e';
 const green = '#4aec8c';
-
-const timer = new Howl({
-  src: [finishingSound],
-  volume: 0.5,
-})
 
 function Timer() {
   const settingsInfo = useContext(SettingsContext);
@@ -26,6 +21,11 @@ function Timer() {
   const secondsLeftRef = useRef(secondsLeft);
   const isPausedRef = useRef(isPaused);
   const modeRef = useRef(mode);
+
+  const finishingSoundRef = useRef(new Howl({
+    src: [finishingSound],
+    volume: 0.5,
+  }));
 
   function tick() {
     secondsLeftRef.current--;
@@ -43,6 +43,9 @@ function Timer() {
 
       setSecondsLeft(nextSeconds);
       secondsLeftRef.current = nextSeconds;
+
+      // Play the finishing sound when switching modes
+      finishingSoundRef.current.play();
     }
 
     secondsLeftRef.current = settingsInfo.workMinutes * 60;
@@ -57,7 +60,7 @@ function Timer() {
       }
 
       tick();
-    },1000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [settingsInfo]);
@@ -69,26 +72,25 @@ function Timer() {
 
   const minutes = Math.floor(secondsLeft / 60);
   let seconds = secondsLeft % 60;
-  if(seconds < 10) seconds = '0'+seconds;
+  if (seconds < 10) seconds = '0' + seconds;
 
   return (
     <div>
-      <CircularProgressbar 
-      value={percentage} 
-      text={minutes + ':' + seconds} 
-      styles={buildStyles({
-      textColor:'#000',
-      pathColor:mode === 'work' ? red : green,
-      tailColor:'rgba(255,255,255,.2)'
-       })} />
-      <div style={{marginTop:'20px'}}>
-
-       {isPaused 
-       ? <PlayButton onClick={() => { setIsPaused(false); isPausedRef.current = false; }}/> 
-       : <PauseButton onClick={() => { setIsPaused(true); isPausedRef.current = true; }}/>}
-
+      <CircularProgressbar
+        value={percentage}
+        text={minutes + ':' + seconds}
+        styles={buildStyles({
+          textColor: '#000',
+          pathColor: mode === 'work' ? red : green,
+          tailColor: 'rgba(255,255,255,.2)'
+        })}
+      />
+      <div style={{ marginTop: '20px' }}>
+        {isPaused
+          ? <PlayButton onClick={() => { setIsPaused(false); isPausedRef.current = false; }} />
+          : <PauseButton onClick={() => { setIsPaused(true); isPausedRef.current = true; }} />}
       </div>
-      <div style={{marginTop:'20px'}} >
+      <div style={{ marginTop: '20px' }} >
         <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
       </div>
     </div>
