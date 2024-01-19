@@ -5,9 +5,16 @@ import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
 import {useContext, useState, useEffect, useRef} from "react";
 import SettingsContext from "./SettingsContext";
+import { Howl } from 'howler';
+import finishingSound from './sound/rockrock.mp3';
 
 const red = '#f54e4e';
 const green = '#4aec8c';
+
+const timer = new Howl({
+  src: [finishingSound],
+  volume: 0.5,
+})
 
 function Timer() {
   const settingsInfo = useContext(SettingsContext);
