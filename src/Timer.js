@@ -24,7 +24,7 @@ function Timer() {
 
   const finishingSoundRef = useRef(new Howl({
     src: [finishingSound],
-    volume: 0.5,
+    volume: 0.1,
   }));
 
   function tick() {
